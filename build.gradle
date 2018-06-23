@@ -1,0 +1,73 @@
+
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        maven { url "https://repo.spring.io/plugins-release" }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE"
+    }
+}
+plugins {
+    id "org.gradle.java"
+    id "io.spring.dependency-management" version "1.0.4.RELEASE"
+}
+group 'pallavi'
+version '1.0-SNAPSHOT'
+jar {
+    baseName = 'CustomerOnboarding'
+    version =  '1.0.0-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:2.0.3.RELEASE'
+    }
+}
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'http://repo.spring.io/milestone' }
+    maven { url 'http://repo.spring.io/snapshot' }
+    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url 'http://repo.spring.io/libs-snapshot' }
+    maven { url 'https://repo.spring.io/plugins-release' }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    compile group: 'org.springframework', name: 'spring-core'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate4'
+    compile group: 'mysql', name: 'mysql-connector-java'
+    compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.3'
+    compile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.0.3'
+    compile group: 'org.valid4j', name: 'json-path-matchers', version: '1.0'
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile group: 'org.springframework.security', name: 'spring-security-test'
+    testCompile group: 'junit', name: 'junit'
+    testCompile group: 'org.hsqldb', name: 'hsqldb'
+}
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.8'
+}
