@@ -1,26 +1,29 @@
 package com.project.controllers;
 
 import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
 public class CustomerResource {
-    private CustomerResource customerService;
+    private CustomerService customerService;
+
+    public CustomerResource(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping(value= "/id", produces= MediaType.APPLICATION_JSON_VALUE)
     public Customer showCustomer()
     {
         return new Customer("abc", "123") ;
     }
-    @PostMapping(value= "/api/customers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String addCustomer(Model model)
+    @PostMapping(value= "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Customer addCustomer(@RequestBody Customer customer)
     {
-        return "customer";
+        return customer;
     }
 
-    private class Customer {
+    public static class Customer {
         private String customers;
         private String id;
 
@@ -43,6 +46,11 @@ public class CustomerResource {
         public Customer(String customers, String id) {
             this.customers = customers;
             this.id = id;
+        }
+
+        public Customer()
+        {
+
         }
     }
 }
